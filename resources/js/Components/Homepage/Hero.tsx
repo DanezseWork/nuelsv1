@@ -14,9 +14,8 @@ import Sparkles from "../Common/Sparkles";
 // });
 
 export const Hero4 = () => (
-  <div className="relative h-screen w-full py-40 px-10 bg-black overflow-hidden">
-    {/* Sparkles in the background */}
-    <Sparkles />
+  <div className="relative h-screen w-full py-40 px-10 bg-transparent overflow-hidden">
+ 
 
     <div className="container h-full flex justify-center items-center mx-auto">
       <div className="grid grid-cols-1 gap-8 items-center md:grid-cols-2">
@@ -29,12 +28,12 @@ export const Hero4 = () => (
           <h1 className="text-5xl md:text-7xl max-w-lg text-[#fbe37b] tracking-tighter text-left font-bold py-3 [text-shadow:0_0_10px_rgb(250,204,21)]">
             Beauty & Comfort, Redefined.
           </h1>
-          <p className="text-xl text-yellow-400 leading-relaxed tracking-tight text-muted-foreground max-w-md text-left">
+          <p className="text-xl text-white leading-relaxed tracking-tight text-muted-foreground max-w-md text-left">
             Elevate your self-care in a space of pure relaxation and elegance. Experience luxury and comfort that leaves you refreshed, confident, and effortlessly beautiful.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-8 z-20">
           {/* Image 1 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

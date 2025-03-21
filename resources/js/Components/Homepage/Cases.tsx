@@ -13,11 +13,11 @@ export const Case2 = () => {
   const [api, setApi] = useState<CarouselApi>();
 
   return (
-    <div className="relative w-full py-20 lg:py-40 bg-black overflow-hidden">
-      <Sparkles />
+    <div className="relative w-full py-20 lg:py-40 bg-transparent overflow-hidden">
+
       <div className="container mx-auto">
         <div className="grid grid-cols-5 gap-10 items-center">
-          <div className="relative w-full col-span-4">
+          <div className="relative w-full col-span-4 z-20">
             {/* <div className="bg-gradient-to-r from-[#444142] via-[#444142]/5 to-[#444142] z-10 absolute left-0 top-0 right-0 bottom-0 w-full h-full"></div> */}
 
             <div className="bg-gradient-to-r from-black via-black/5 to-black z-10 absolute left-0 top-0 right-0 bottom-0 w-full h-full"></div>

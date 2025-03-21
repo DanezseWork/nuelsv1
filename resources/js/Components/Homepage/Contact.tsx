@@ -3,9 +3,9 @@
 import { CalendarIcon, Check, MoveRight, PhoneCall } from "lucide-react";
 import { Badge } from "@/Components/ui/Badge";
 import { Button } from "@/Components/ui/Button";
-import { Calendar } from "@/Components/ui/calendar";
+import { Calendar } from "@/Components/ui/Calendar";
 import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/Popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Label } from "@/Components/ui/Label";
@@ -46,8 +46,8 @@ export const Contact1 = () => {
   };
 
   return (
-    <div className="relative w-full py-20 lg:py-40 bg-black" id="bookingSection">
-        <Sparkles />
+    <div className="relative w-full py-20 lg:py-40 bg-transparent" id="bookingSection">
+
       <div className="container max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-10">
           <div className="flex flex-col gap-6">
@@ -93,7 +93,7 @@ export const Contact1 = () => {
           </div>
 
           <div className="justify-center flex items-center">
-            <div className="rounded-md w-[400px] flex flex-col border p-8 gap-4 bg-secondary border-none text-white z-10">
+            <div className="rounded-md w-[400px] flex flex-col border p-8 gap-4 bg-secondary border-none text-white z-20">
               <p className="text-2xl font-bold">Book a appointment</p>
               <div className="grid w-full max-w-sm items-center gap-1">
                 <Label htmlFor="picture">Date</Label>
@@ -134,8 +134,8 @@ export const Contact1 = () => {
               </div>
 
               <Button className="gap-4 w-full bg-yellow-500 text-white font-semibold shadow-[0_0_10px_rgb(250,204,21)] hover:shadow-[0_0_20px_rgb(250,204,21)] transition-shadow duration-300">
-    Book the meeting <MoveRight className="w-4 h-4" />
-</Button>
+                  Book the meeting <MoveRight className="w-4 h-4" />
+              </Button>
 
             </div>
           </div>

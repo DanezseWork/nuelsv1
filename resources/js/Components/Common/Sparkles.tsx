@@ -31,11 +31,11 @@ const Sparkles = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none">
+    <div className="fixed inset-0 pointer-events-none z-10">
       {stars.map((star) => (
         <motion.div
           key={star.id}
-          className="absolute bg-yellow-300"
+          className="absolute bg-yellow-300 z-10"
           style={{
             width: `${star.size}px`,
             height: `${star.size}px`,
