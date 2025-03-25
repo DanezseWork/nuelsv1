@@ -16,39 +16,56 @@ import { router } from '@inertiajs/react';
 
 export const Header1 = () => {
 
-const handleRedirect = () => {
-    const booking = document.getElementById('bookingSection');
-    if (booking) {
-    booking.scrollIntoView({ behavior: 'smooth' });
-    } else if (window.location.pathname !== '/') {
-    window.location.href = '/#bookingSection';
-    }
-};
-
-useEffect(() => {
-    const hash = window.location.hash;
-    if (hash === '#bookingSection') {
-        const bookingSection = document.getElementById('bookingSection');
-        if (bookingSection) {
-        bookingSection.scrollIntoView({ behavior: 'smooth' });
+    const [isAtTop, setIsAtTop] = useState(true);
+    const [isOpen, setOpen] = useState(false);
+    const handleRedirect = () => {
+        const booking = document.getElementById('bookingSection');
+        if (booking) {
+            booking.scrollIntoView({ behavior: 'smooth' });
+        } else if (window.location.pathname !== '/') {
+            window.location.href = '/#bookingSection';
         }
-    }
+    };
+    const navigationItems = [
+        {
+        title: "Home",
+        href: "/",
+        description: "",
+        },  
+    ];
+
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash === '#bookingSection') {
+            const bookingSection = document.getElementById('bookingSection');
+            if (bookingSection) {
+            bookingSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     }, [])
 
-const navigationItems = [
-    {
-    title: "Home",
-    href: "/",
-    description: "",
-    },  
-];
-
-const [isOpen, setOpen] = useState(false);
+    useEffect(() => {
+        const handleScroll = () => {
+          setIsAtTop(window.scrollY === 0);
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+    
 return (
-     <header className="w-full z-40 fixed top-0 left-0 bg-secondary border-b-2 border-yellow-500 shadow-[0_0_10px_#facc15] px-10">
+    //  <header id="header" className={`w-full z-40 fixed top-0 left-0 bg-secondary border-b-2 border-yellow-500 shadow-[0_0_10px_#facc15] px-10 ${isAtTop ? 'bg-transparent' : 'bg-secondary'}`}>
+    <header
+      id="header"
+      className={`w-full z-40 fixed top-0 left-0 px-10 transition-all duration-300 ${
+        isAtTop
+          ? "bg-transparent border-none shadow-none"
+          : "bg-secondary border-b-2 border-yellow-500 shadow-[0_0_10px_#facc15]"
+      }`}
+    >
         <div className="container relative mx-auto min-h-20 flex gap-4">
             <div className="flex justify-between w-full">
-            <p className="gwendolyn-bold font-thin text-[#fbe37b] text-[50px] [text-shadow:0_0_10px_rgb(250,204,21)]" onClick={() => {
+            <p className="gwendolyn-bold font-thin text-[#fbe37b] text-[50px] [text-shadow:0_0_20px_rgb(250,204,21)]" onClick={() => {
                 window.location.href = '/';
             }}>Nuel's</p>
             </div>
@@ -57,7 +74,7 @@ return (
                     Book Now
                 </Button>
             <div className=" hidden md:inline shadow-[0_0_10px_#facc15]"></div>
-                <Button className="border-none text-md text-white bg-transparent hover:bg-transparent hover:text-primary [text-shadow:0_0_10px_rgb(255,255,255)] hidden md:inline" variant="outline" onClick={() => {
+                <Button variant="ghost" className="text-md text-white bg-transparent hover:bg-transparent hover:text-primary [text-shadow:0_0_10px_rgb(255,255,255)] hidden md:inline" onClick={() => {
                     window.location.href = '/login';
                 }}>Sign in</Button>
                 </div>

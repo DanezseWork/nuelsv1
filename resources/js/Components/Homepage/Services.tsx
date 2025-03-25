@@ -8,6 +8,7 @@ const fadeInUp = {
 
 export const Feature6 = () => (
   <motion.div 
+    id="serviceSection"
     initial="hidden" 
     whileInView="visible" 
     viewport={{ once: false, amount: 0.2 }}

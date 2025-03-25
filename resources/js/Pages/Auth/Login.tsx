@@ -7,6 +7,9 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import { Header1 } from '@/Components/Homepage/Header';
+import Sparkles from '@/Components/Common/Sparkles';
+import { Footer1 } from '@/Components/Homepage/Footer';
+import { Button } from '@/Components/ui/Button';
 export default function Login({
     status,
     canResetPassword,
@@ -29,10 +32,9 @@ export default function Login({
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout fileName='Login'>
             <Head title="Log in" />
-            <Header1 />
-
+            <div className="container mx-auto">
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">
                     {status}
@@ -52,6 +54,7 @@ export default function Login({
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
+                        placeholder="Enter your email"
                     />
 
                     <InputError message={errors.email} className="mt-2" />
@@ -68,12 +71,13 @@ export default function Login({
                         className="mt-1 block w-full"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
+                        placeholder="Enter your password"
                     />
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4 block">
+                <div className="mt-4 flex justify-between">
                     <label className="flex items-center">
                         <Checkbox
                             name="remember"
@@ -85,27 +89,38 @@ export default function Login({
                                 )
                             }
                         />
-                        <span className="ms-2 text-sm text-gray-600">
+                        <span className="ms-2 text-sm text-white">
                             Remember me
                         </span>
                     </label>
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="rounded-md text-sm text-white underline hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                         >
                             Forgot your password?
                         </Link>
                     )}
+                </div>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                <div className="mt-4 flex items-center flex-col">
+                    <Button className="gap-4 w-[75%] mx-auto bg-yellow-500 text-white font-semibold shadow-[0_0_10px_rgb(250,204,21)] hover:shadow-[0_0_20px_rgb(250,204,21)] transition-shadow duration-300" disabled={processing}>
+                            Log in
+                    </Button>
+                    <div className='text-white flex gap-1 mt-2 text-sm'>
+                        <p>Don't have an account?</p>
+                        <Link href="/register" className='underline text-yellow-500 hover:text-primary'>
+                            Register
+                        </Link>
+                    </div>
+                    
+                    {/* <PrimaryButton className="ms-4" >
                         Log in
-                    </PrimaryButton>
+                    </PrimaryButton> */}
                 </div>
             </form>
+            </div>
         </GuestLayout>
+    
     );
 }

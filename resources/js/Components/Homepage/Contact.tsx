@@ -11,7 +11,7 @@ import { format } from "date-fns";
 import { Label } from "@/Components/ui/Label";
 import { Input } from "@/Components/ui/Input";
 import TimePicker from "@/Components/ui/TimePicker";
-import Sparkles from "../Common/Sparkles";
+
 const TimeInputComponent = () => {
   const [time, setTime] = useState('');
 
@@ -33,6 +33,8 @@ const TimeInputComponent = () => {
         className="hidden"
         value={time}
         onChange={handleTimeChange}
+        min="08:00"
+        max="17:00"
       />
     </div>
   );
@@ -53,40 +55,38 @@ export const Contact1 = () => {
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <h4 className="text-3xl md:text-5xl tracking-tighter max-w-xl text-left font-regular">
-                  Something new
+                <h4 className="text-3xl md:text-5xl tracking-tighter max-w-xl text-left font-bold text-primary [text-shadow:0_0_10px_rgb(250,204,21)]">
+                  Elevate Your Beauty with a Professional Touch
                 </h4>
-                <p className="text-lg leading-relaxed tracking-tight text-muted-foreground max-w-sm text-left">
-                  Managing a small business today is already tough. Avoid
-                  further complications by ditching outdated, tedious trade
-                  methods.
+                <p className="text-lg leading-relaxed tracking-tight text-white max-w-sm text-left">
+                  Looking stunning has never been easier! Whether it's for a special occasion or just a confidence boost, let us bring out your best look with expert hair and makeup services.
                 </p>
               </div>
             </div>
             <div className="flex flex-row gap-6 items-start text-left">
                 <Check className="w-4 h-4 mt-2 text-primary" />
-              <div className="flex flex-col gap-1">
-                <p>Easy to use</p>
-                <p className="text-muted-foreground text-sm">
-                  We&apos;ve made it easy to use and understand.
+              <div className="flex flex-col gap-1 text-primary">
+                <p>Effortless Beauty</p>
+                <p className="text-white text-sm">
+                Sit back and relax while we create a look tailored just for you.
                 </p>
               </div>
             </div>
             <div className="flex flex-row gap-6 items-start text-left">
                 <Check className="w-4 h-4 mt-2 text-primary" />
-              <div className="flex flex-col gap-1">
-                <p>Fast and reliable</p>
-                <p className="text-muted-foreground text-sm">
-                  We&apos;ve made it easy to use and understand.
+              <div className="flex flex-col gap-1 text-primary">
+                <p>Fast & Flawless</p>
+                <p className="text-white text-sm">
+                Get ready in no time with our expert stylists—quality and speed combined.
                 </p>
               </div>
             </div>
             <div className="flex flex-row gap-6 items-start text-left">
                 <Check className="w-4 h-4 mt-2 text-primary" />
-              <div className="flex flex-col gap-1">
-                <p>Beautiful and modern</p>
-                <p className="text-muted-foreground text-sm">
-                  We&apos;ve made it easy to use and understand.
+              <div className="flex flex-col gap-1 text-primary">
+                <p>Red Carpet-Worthy Results</p>
+                <p className="text-white text-sm">
+                From soft glam to bold transformations, we ensure you step out looking flawless.
                 </p>
               </div>
             </div>
@@ -136,7 +136,6 @@ export const Contact1 = () => {
               <Button className="gap-4 w-full bg-yellow-500 text-white font-semibold shadow-[0_0_10px_rgb(250,204,21)] hover:shadow-[0_0_20px_rgb(250,204,21)] transition-shadow duration-300">
                   Book the meeting <MoveRight className="w-4 h-4" />
               </Button>
-
             </div>
           </div>
         </div>

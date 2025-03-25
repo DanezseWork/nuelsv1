@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { ClockIcon, ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import dayjs from "dayjs";
 
-const times = Array.from({ length: 24 * 4 }, (_, i) =>
-    dayjs().startOf("day").add(i * 15, "minute").format("hh:mm A")
-); // Generates times in 15-minute intervals
+// Generate times in 15-minute intervals
+const allTimes = Array.from({ length: (24 * 4) }, (_, i) => 
+    dayjs().startOf("day").add(i * 15, "minute")
+);
+
+// Filter times between 8:00 AM and 5:00 PM
+const times = allTimes
+    .filter(time => time.hour() >= 8 && time.hour() < 17) // 8 AM to 4:45 PM
+    .map(time => time.format("hh:mm A")); // Convert to 12-hour format
 
 const TimePicker = () => {
     const [selectedTime, setSelectedTime] = useState(times[0]);

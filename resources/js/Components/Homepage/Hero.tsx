@@ -25,7 +25,7 @@ export const Hero4 = () => (
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex gap-4 flex-col"
         >
-          <h1 className="text-5xl md:text-7xl max-w-lg text-[#fbe37b] tracking-tighter text-left font-bold py-3 [text-shadow:0_0_10px_rgb(250,204,21)]">
+          <h1 className="text-5xl md:text-7xl max-w-lg text-[#fbe37b] tracking-tighter text-left font-bold py-3 [text-shadow:0_0_20px_rgb(250,204,21)]">
             Beauty & Comfort, Redefined.
           </h1>
           <p className="text-xl text-white leading-relaxed tracking-tight text-muted-foreground max-w-md text-left">
