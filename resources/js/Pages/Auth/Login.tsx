@@ -1,15 +1,12 @@
 import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { Header1 } from '@/Components/Homepage/Header';
-import Sparkles from '@/Components/Common/Sparkles';
-import { Footer1 } from '@/Components/Homepage/Footer';
 import { Button } from '@/Components/ui/Button';
+import PasswordInput from '@/Components/PasswordInput';
 export default function Login({
     status,
     canResetPassword,
@@ -63,7 +60,7 @@ export default function Login({
                 <div className="mt-4">
                     <InputLabel htmlFor="password" value="Password" />
 
-                    <TextInput
+                    <PasswordInput
                         id="password"
                         type="password"
                         name="password"
@@ -96,7 +93,7 @@ export default function Login({
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="rounded-md text-sm text-white underline hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            className="rounded-md text-sm text-yellow-500 underline hover:text-primary focus:outline-none"
                         >
                             Forgot your password?
                         </Link>
