@@ -12,23 +12,19 @@ export default function Dashboard() {
         >
             <Head title="Dashboard" />
 
-            <div className="container mx-auto p-5 flex gap-4">
-                <div className="max-w-xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            Total Clients
-                        </div>
+            <div className="mx-auto p-5 flex flex-wrap gap-4">
+                <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div className="p-6 text-gray-900">
+                        Total Clients
                     </div>
                 </div>
 
-                <div className="max-w-xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                         Total Bookings
                         </div>
                     </div>
-                </div>
-
+              
                 <div className="max-w-xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">

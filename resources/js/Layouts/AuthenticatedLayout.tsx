@@ -15,9 +15,9 @@ export default function Authenticated({
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-300">
             <nav className="border-b border-gray-100 bg-secondary">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto px-10">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
@@ -27,7 +27,7 @@ export default function Authenticated({
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden space-x-8 md:-my-px sm:ms-10 md:flex">
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
@@ -38,13 +38,25 @@ export default function Authenticated({
                                     href="/booking"
                                     active={route().current('booking')}
                                 >
-                                    Booking
+                                    Scheduler
                                 </NavLink>
-                                
+                                <NavLink
+                                    href="/booking"
+                                    active={route().current('booking')}
+                                >
+                                    Clients
+                                </NavLink>
+                                <NavLink
+                                    href="/booking"
+                                    active={route().current('booking')}
+                                >
+                                    Appointments
+                                </NavLink>
+                     
                             </div>
                         </div>
 
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center">
+                        <div className="hidden md:ms-6 md:flex md:items-center">
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -89,7 +101,7 @@ export default function Authenticated({
                             </div>
                         </div>
 
-                        <div className="-me-2 flex items-center sm:hidden">
+                        <div className="-me-2 flex items-center md:hidden">
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
@@ -181,7 +193,7 @@ export default function Authenticated({
                 </header>
             )} */}
 
-            <main className='max-w-7xl mx-auto'>
+            <main className='mx-auto'>
                 {children}
             </main>
         </div>

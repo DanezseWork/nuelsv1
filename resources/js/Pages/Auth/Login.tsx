@@ -24,7 +24,7 @@ export default function Login({
         e.preventDefault();
 
         post(route('login'), {
-            onFinish: () => reset('password'),
+            // onFinish: () => reset('password'),
         });
     };
 
@@ -52,6 +52,7 @@ export default function Login({
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
                         placeholder="Enter your email"
+                        error={errors.email ? true : false}
                     />
 
                     <InputError message={errors.email} className="mt-2" />
@@ -68,7 +69,8 @@ export default function Login({
                         className="mt-1 block w-full"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
-                        placeholder="Enter your password"
+                        placeholder="Enter your password"   
+                        error={errors.password ? true : false}
                     />
 
                     <InputError message={errors.password} className="mt-2" />
