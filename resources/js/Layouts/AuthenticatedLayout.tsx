@@ -35,8 +35,8 @@ export default function Authenticated({
                                     Dashboard
                                 </NavLink>
                                 <NavLink
-                                    href="/booking"
-                                    active={route().current('booking')}
+                                    href="/scheduler"
+                                    active={route().current('scheduler')}
                                 >
                                     Scheduler
                                 </NavLink>

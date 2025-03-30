@@ -38,6 +38,7 @@
         "embla-carousel-react": "^8.5.2",
         "framer-motion": "^12.5.0",
         "lucide-react": "^0.479.0",
+        "react-big-schedule": "^4.4.5",
         "react-datepicker": "^8.2.1",
         "react-day-picker": "^8.10.1",
         "react-time-picker": "^7.0.0",
