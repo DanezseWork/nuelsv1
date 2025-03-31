@@ -1,95 +1,38 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { Scheduler as BigScheduler, SchedulerData, ViewType, DATE_FORMAT, View, EventItem } from "react-big-schedule";
-import dayjs from "dayjs";
-import "react-big-schedule/dist/css/style.css";
+import { useCalendarApp, ScheduleXCalendar } from '@schedule-x/react'
+import {
+  createViewDay,
+  createViewMonthAgenda,
+  createViewMonthGrid,
+  createViewWeek,
+} from '@schedule-x/calendar'
+import { createEventsServicePlugin } from '@schedule-x/events-service'
+ 
+import '@schedule-x/theme-default/dist/index.css'
+import { useEffect } from 'react';
 import { useState } from 'react';
 
-export default function BaseScheduler() {
-    const [schedulerData] = useState(() => {
-        // @ts-ignore - The package's type definitions are incomplete
-        const data = new SchedulerData(new dayjs().format(DATE_FORMAT), ViewType.Week);
-        data.setSchedulerLocale('pt-br');
-        data.setCalendarPopoverLocale('pt_BR');
-        
-        data.setResources([
-            { id: 'r0', name: 'Resource0', groupOnly: true },
-            { id: 'r1', name: 'Resource1' },
-            { id: 'r2', name: 'Resource2', parentId: 'r0' },
-            { id: 'r3', name: 'Resource3', parentId: 'r4' },
-            { id: 'r4', name: 'Resource4', parentId: 'r2' },
-        ]);
-        
-        data.setEvents([
-            {
-                id: 1,
-                start: '2022-12-18 09:30:00',
-                end: '2022-12-19 23:30:00',
-                resourceId: 'r1',
-                title: 'I am finished',
-                bgColor: '#D9D9D9',
-            },
-            {
-                id: 2,
-                start: '2022-12-18 12:30:00',
-                end: '2022-12-26 23:30:00',
-                resourceId: 'r2',
-                title: 'I am not resizable',
-                resizable: false,
-            },
-            {
-                id: 3,
-                start: '2022-12-19 12:30:00',
-                end: '2022-12-20 23:30:00',
-                resourceId: 'r3',
-                title: 'I am not movable',
-                movable: false,
-            },
-            {
-                id: 4,
-                start: '2022-12-19 14:30:00',
-                end: '2022-12-20 23:30:00',
-                resourceId: 'r1',
-                title: 'I am not start-resizable',
-                startResizable: false,
-            },
-            {
-                id: 5,
-                start: '2022-12-19 15:30:00',
-                end: '2022-12-20 23:30:00',
-                resourceId: 'r2',
-                title: 'R2 has recurring tasks every week on Tuesday, Friday',
-                rrule: 'FREQ=WEEKLY;DTSTART=20221219T013000Z;BYDAY=TU,FR',
-                bgColor: '#f759ab',
-            },
-        ]);
-        return data;
-    });
-
-    const prevClick = (schedulerData: SchedulerData) => {
-        schedulerData.prev();
-        schedulerData.setEvents(schedulerData.events);
-    };
-
-    const nextClick = (schedulerData: SchedulerData) => {
-        schedulerData.next();
-        schedulerData.setEvents(schedulerData.events);
-    };
-
-    // @ts-ignore - The package's type definitions are incomplete
-    const onViewChange = (schedulerData: SchedulerData, view: View) => {
-        schedulerData.setViewType(view);
-        schedulerData.setEvents(schedulerData.events);
-    };
-
-    const onSelectDate = (schedulerData: SchedulerData, date: string) => {
-        schedulerData.setDate(date);
-        schedulerData.setEvents(schedulerData.events);
-    };
-
-    const eventClicked = (schedulerData: SchedulerData, event: EventItem) => {
-        alert(`You clicked event: ${event.title}`);
-    };
+export default function Scheduler() {
+    const eventsService = useState(() => createEventsServicePlugin())[0]
+ 
+    const calendar = useCalendarApp({
+      views: [createViewDay(), createViewWeek(), createViewMonthGrid(), createViewMonthAgenda()],
+      events: [
+        {
+          id: '1',
+          title: 'Event 1',
+          start: '2023-12-16',
+          end: '2023-12-16',
+        },
+      ],
+      plugins: [eventsService]
+    })
+   
+    useEffect(() => {
+      // get all events
+      eventsService.getAll()
+    }, [])
 
     return (
         <AuthenticatedLayout
@@ -100,15 +43,11 @@ export default function BaseScheduler() {
             }
         >
             <Head title="Scheduler" />
-
-            <BigScheduler
-                schedulerData={schedulerData}
-                prevClick={prevClick}
-                nextClick={nextClick}
-                onSelectDate={onSelectDate}
-                onViewChange={onViewChange}
-                eventItemClick={eventClicked}
-            />
+            <div className='w-full h-full p-10'>
+                <div className='w-full h-full p-5 [--sx-color-primary:#fbe37b] [--sx-color-on-primary:#000000] [--sx-color-secondary:#facc15] [--sx-color-on-secondary:#000000] [--sx-color-background:#ffffff] [--sx-color-surface:#ffffff] [--sx-color-text:#000000] [--sx-color-border:#e5e7eb]'>
+                    <ScheduleXCalendar calendarApp={calendar} />
+                </div>
+            </div>
         </AuthenticatedLayout>
     );
 }
