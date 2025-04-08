@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { Facebook, Phone } from 'lucide-react';
+import { useEffect } from 'react';
 
 export const Footer1 = () => {
   type NavigationItem = {
@@ -51,6 +52,25 @@ export const Footer1 = () => {
     },
   ];
   
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#clientSection') {
+        const clientSection = document.getElementById('clientSection');
+        if (clientSection) {
+        clientSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+}, [])
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#serviceSection') {
+        const serviceSection = document.getElementById('serviceSection');
+        if (serviceSection) {
+          serviceSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+}, [])
 
   return (
     <div className="w-full py-20 bg-secondary border-t-2 border-yellow-500 shadow-[0_0_10px_#facc15] text-background relative z-20">
