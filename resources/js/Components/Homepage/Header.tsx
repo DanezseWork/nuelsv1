@@ -70,9 +70,14 @@ return (
             }}>Nuel's</p>
             </div>
             <div className="flex justify-end w-full gap-4 py-5">
-                <Button variant="ghost" className="text-white text-md hover:text-primary hover:bg-transparent hidden md:inline [text-shadow:0_0_10px_rgb(255,255,255)]" onClick={handleRedirect}>
+                {/* <Button variant="ghost" className="text-white text-md hover:text-primary hover:bg-transparent hidden md:inline [text-shadow:0_0_10px_rgb(255,255,255)]" onClick={handleRedirect}>
                     Book Now
-                </Button>
+                </Button> */}
+                <Link href="/booking">
+                    <Button variant="ghost" className="text-md text-white bg-transparent hover:bg-transparent hover:text-primary [text-shadow:0_0_10px_rgb(255,255,255)] hidden md:inline">
+                        Book Now
+                    </Button>
+                </Link>
             <div className=" hidden md:inline shadow-[0_0_10px_#facc15]"></div>
                 <Button variant="ghost" className="text-md text-white bg-transparent hover:bg-transparent hover:text-primary [text-shadow:0_0_10px_rgb(255,255,255)] hidden md:inline" onClick={() => {
                     window.location.href = '/login';

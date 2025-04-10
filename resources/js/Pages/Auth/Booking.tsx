@@ -5,9 +5,12 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState } from 'react';
+import { Dropdown } from "@/Components/ui/Dropdown";
+import { MapModal } from "@/Components/ui/MapModal";
 
 export default function Booking() {
+    const [isMapModalOpen, setIsMapModalOpen] = useState(false);
     const { data, setData, post, processing, errors, reset, setError } = useForm({
         first_name: '',
         last_name: '',
@@ -19,9 +22,12 @@ export default function Booking() {
         time: '',
         service: '',
         location: '',
+        address: '',
+        latitude: '',
+        longitude: '',
     });
 
-    const handleChange = (field: keyof typeof data) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (field: keyof typeof data) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setData(field, e.target.value);
 
         // Clear error for this field when user starts typing
@@ -137,28 +143,78 @@ export default function Booking() {
 
                 <div className="mt-4">
                     <InputLabel htmlFor="service" value="Service" />
-                    <TextInput
-                        id="service"
-                        type="text"
-                        name="service"
+                    <Dropdown
                         value={data.service}
-                        className="mt-1 block w-full"
-                        autoComplete="service"
-                        onChange={handleChange('service')}
-                        error={!!errors.service}
+                        onChange={(value) => {
+                            setData('service', value);
+                            if (errors.service) {
+                                setError('service', '');
+                            }
+                        }}
+                        options={[
+                            { value: 'Hair', label: 'Hair' },
+                            { value: 'Makeup', label: 'Makeup' },
+                            { value: 'Nail', label: 'Nail service' }
+                        ]}
+                        placeholder="Select a service"
                     />
                     <InputError message={errors.service} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
                     <InputLabel htmlFor="location" value="Location" />
-                    <TextInput
-                        id="location"
-                        type="text"
-                        name="location"
+                    <Dropdown
                         value={data.location}
+                        onChange={(value) => {
+                            setData('location', value);
+                            if (errors.location) {
+                                setError('location', '');
+                            }
+                        }}
+                        options={[
+                            { value: 'Studio', label: 'Studio' },
+                            { value: 'Home', label: 'Home' }
+                        ]}
+                        placeholder="Select a location"
                     />
+                    <InputError message={errors.location} className="mt-2" />
                 </div>
+
+                {data.location === 'Home' && (
+                    <div className="mt-4">
+                        <InputLabel htmlFor="address" value="Address" />
+                        <div 
+                            className="mt-1 block w-full"
+                            onClick={() => setIsMapModalOpen(true)}
+                        >
+                            <TextInput
+                                id="address"
+                                type="text"
+                                name="address"
+                                value={data.address}
+                                className="w-full cursor-pointer"
+                                readOnly
+                                placeholder="Click to select location on map"
+                                error={!!errors.address}
+                            />
+                        </div>
+                        <InputError message={errors.address} className="mt-2" />
+                    </div>
+                )}
+
+                <MapModal
+                    isOpen={isMapModalOpen}
+                    onClose={() => setIsMapModalOpen(false)}
+                    onSelect={(address, lat, lng) => {
+                        setData('address', address);
+                        setData('latitude', lat.toString());
+                        setData('longitude', lng.toString());
+                        if (errors.address) {
+                            setError('address', '');
+                        }
+                    }}
+                    initialAddress={data.address}
+                />
 
                 {/* <div className="mt-4">
                     <InputLabel htmlFor="password" value="Password" />
