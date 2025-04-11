@@ -154,7 +154,9 @@ export default function Booking() {
                         options={[
                             { value: 'Hair', label: 'Hair' },
                             { value: 'Makeup', label: 'Makeup' },
-                            { value: 'Nail', label: 'Nail service' }
+                            { value: 'Nail', label: 'Nail service' },
+                            { value: 'All Services', label: 'All Services' },
+                            { value: 'Other', label: 'Other' },
                         ]}
                         placeholder="Select a service"
                     />
@@ -183,21 +185,16 @@ export default function Booking() {
                 {data.location === 'Home' && (
                     <div className="mt-4">
                         <InputLabel htmlFor="address" value="Address" />
-                        <div 
-                            className="mt-1 block w-full"
-                            onClick={() => setIsMapModalOpen(true)}
-                        >
-                            <TextInput
-                                id="address"
-                                type="text"
-                                name="address"
-                                value={data.address}
-                                className="w-full cursor-pointer"
-                                readOnly
-                                placeholder="Click to select location on map"
-                                error={!!errors.address}
-                            />
-                        </div>
+                        <TextInput
+                            id="address"
+                            type="text"
+                            name="address"
+                            value={data.address}
+                            onChange={(e) => setData('address', e.target.value)}
+                            className="w-full"
+                            placeholder="Enter your address"
+                            error={!!errors.address}
+                        />
                         <InputError message={errors.address} className="mt-2" />
                     </div>
                 )}

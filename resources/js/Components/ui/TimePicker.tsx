@@ -3,15 +3,13 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "lucide-react";
 import dayjs from "dayjs";
 
-// Generate times in 15-minute intervals
+// Generate times in 15-minute intervals for 24 hours
 const allTimes = Array.from({ length: (24 * 4) }, (_, i) => 
     dayjs().startOf("day").add(i * 15, "minute")
 );
 
-// Filter times between 8:00 AM and 5:00 PM
-const times = allTimes
-    .filter(time => time.hour() >= 8 && time.hour() < 17) // 8 AM to 4:45 PM
-    .map(time => time.format("hh:mm A")); // Convert to 12-hour format
+// Convert all times to 12-hour format with AM/PM
+const times = allTimes.map(time => time.format("hh:mm A")); // 12-hour format with AM/PM
 
 const TimePicker = () => {
     const [selectedTime, setSelectedTime] = useState(times[0]);
