@@ -11,8 +11,8 @@ interface GuestProps extends PropsWithChildren {
 export default function GuestLayout({ children, fileName }: GuestProps) {
     return (
         <div className="min-h-screen bg-black">
-            <div className="relative">
-                <Sparkles />
+            <div className="relative py-10">
+                
                 <div className="relative z-10">
                     <Head>
                         <title>{fileName}</title>
@@ -34,9 +34,11 @@ export default function GuestLayout({ children, fileName }: GuestProps) {
                         <div className='text-white [text-shadow:0_0_20px_rgb(255,255,255)] text-[50px] font-bold'>
                             {fileName}
                         </div>
-                        <div className="mt-6 w-full bg-secondary px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg z-20">
+                        <div className="my-6 w-full bg-secondary px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg z-20">
                             {children}
+                            
                         </div>
+                        <Sparkles />
                     </div>
                 </div>
             </div>

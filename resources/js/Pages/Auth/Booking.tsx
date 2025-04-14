@@ -1,13 +1,20 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PasswordInput from '@/Components/PasswordInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 import { Dropdown } from "@/Components/ui/Dropdown";
 import { MapModal } from "@/Components/ui/MapModal";
+import { Calendar } from "@/Components/ui/Calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/Components/ui/Popover";
+import { Button } from "@/Components/ui/Button";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import TimePicker from "@/Components/ui/TimePicker";
+import dayjs from 'dayjs';
 
 export default function Booking() {
     const [isMapModalOpen, setIsMapModalOpen] = useState(false);
@@ -15,35 +22,52 @@ export default function Booking() {
         first_name: '',
         last_name: '',
         email: '',
-        password: '',
-        password_confirmation: '',
         phone: '',
         date: '',
-        time: '',
+        time: dayjs().format('hh:mm A'),
         service: '',
         location: '',
         address: '',
-        latitude: '',
-        longitude: '',
     });
+
+    const [date, setDate] = useState<Date | undefined>(data.date ? new Date(data.date) : undefined);
 
     const handleChange = (field: keyof typeof data) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setData(field, e.target.value);
 
         // Clear error for this field when user starts typing
         if (errors[field]) {
-            setError(field, ''); // Use an empty string instead of null
+            setError(field, '');
         }
+    };
+
+    const handleDateSelect = (selectedDate: Date | undefined) => {
+        setDate(selectedDate);
+        if (selectedDate) {
+            // Format the date as YYYY-MM-DD without timezone conversion
+            const year = selectedDate.getFullYear();
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            setData('date', `${year}-${month}-${day}`);
+        }
+    };
+
+    const handleTimeSelect = (selectedTime: string) => {
+        setData('time', selectedTime);
     };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route('booking'), {
-            preserveScroll: true, // Prevents page jumping
-            onError: () => {},    // Ensures form values persist
-            onSuccess: () => reset(), // Optional: Resets form only on success
-            // onFinish: () => reset('password', 'password_confirmation'),
+            preserveScroll: true,
+            onError: (errors) => {
+                console.log('Form errors:', errors);
+            },
+            onSuccess: () => {
+                reset();
+                alert('Booking submitted successfully!');
+            },
         });
     };
 
@@ -53,7 +77,7 @@ export default function Booking() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="First Name" />
+                    <InputLabel htmlFor="first_name" value="First Name" />
                     <TextInput
                         id="first_name"
                         name="first_name"
@@ -89,7 +113,7 @@ export default function Booking() {
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
-                        autoComplete="username"
+                        autoComplete="email"
                         onChange={handleChange('email')}
                         error={!!errors.email}
                     />
@@ -113,31 +137,35 @@ export default function Booking() {
 
                 <div className="mt-4">
                     <InputLabel htmlFor="date" value="Date" />
-                    <TextInput
-                        id="date"
-                        type="date"
-                        name="date"
-                        value={data.date}
-                        className="mt-1 block w-full"
-                        autoComplete="date"
-                        onChange={handleChange('date')}
-                        error={!!errors.date}
-                    />
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant={"outline"}
+                                className={cn(
+                                    "w-full justify-start text-left font-normal",
+                                    !date && "text-muted-foreground"
+                                )}
+                            >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {date ? format(date, "PPP") : <span>Pick a date</span>}
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                            <Calendar
+                                mode="single"
+                                selected={date}
+                                onSelect={handleDateSelect}
+                                initialFocus
+                                disabled={(date) => date < new Date()}
+                            />
+                        </PopoverContent>
+                    </Popover>
                     <InputError message={errors.date} className="mt-2" />
                 </div>
                 
                 <div className="mt-4">
                     <InputLabel htmlFor="time" value="Time" />
-                    <TextInput
-                        id="time"
-                        type="time"
-                        name="time"
-                        value={data.time}
-                        className="mt-1 block w-full"
-                        autoComplete="time"
-                        onChange={handleChange('time')}
-                        error={!!errors.time}
-                    />
+                    <TimePicker onTimeSelect={handleTimeSelect} />
                     <InputError message={errors.time} className="mt-2" />
                 </div>
 
@@ -202,10 +230,8 @@ export default function Booking() {
                 <MapModal
                     isOpen={isMapModalOpen}
                     onClose={() => setIsMapModalOpen(false)}
-                    onSelect={(address, lat, lng) => {
+                    onSelect={(address) => {
                         setData('address', address);
-                        setData('latitude', lat.toString());
-                        setData('longitude', lng.toString());
                         if (errors.address) {
                             setError('address', '');
                         }
@@ -213,44 +239,7 @@ export default function Booking() {
                     initialAddress={data.address}
                 />
 
-                {/* <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-                    <PasswordInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={handleChange('password')}
-                        error={!!errors.password}
-                    />
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-                    <PasswordInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={handleChange('password_confirmation')}
-                        error={!!errors.password_confirmation}
-                    />
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div> */}
-
                 <div className="mt-4 flex items-center justify-end">
-                    {/* <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-yellow-500 underline hover:text-primary focus:outline-none"
-                    >
-                        Already registered?
-                    </Link> */}
-
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Book Now
                     </PrimaryButton>

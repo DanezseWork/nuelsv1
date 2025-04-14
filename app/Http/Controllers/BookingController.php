@@ -1,29 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Booking;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 
 class BookingController extends Controller
 {
-    /**
-     * Display the booking form.
-     */
-    public function create(): Response
+    public function create()
     {
         return Inertia::render('Auth/Booking');
     }
 
-    /**
-     * Handle an incoming booking request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -43,10 +33,7 @@ class BookingController extends Controller
         return redirect()->back()->with('success', 'Booking submitted successfully!');
     }
 
-    /**
-     * Display a listing of the bookings.
-     */
-    public function index(): Response
+    public function index()
     {
         $bookings = Booking::orderBy('created_at', 'desc')->get();
         return Inertia::render('Bookings/Index', [

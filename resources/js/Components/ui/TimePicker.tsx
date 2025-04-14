@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "lucide-react";
 import dayjs from "dayjs";
@@ -11,13 +11,45 @@ const allTimes = Array.from({ length: (24 * 4) }, (_, i) =>
 // Convert all times to 12-hour format with AM/PM
 const times = allTimes.map(time => time.format("hh:mm A")); // 12-hour format with AM/PM
 
-const TimePicker = () => {
-    const [selectedTime, setSelectedTime] = useState(times[0]);
+// Function to get the closest 15-minute interval to current time
+const getClosestTime = () => {
+    const now = dayjs();
+    const currentMinutes = now.minute();
+    const roundedMinutes = Math.round(currentMinutes / 15) * 15;
+    const closestTime = now.startOf('hour').add(roundedMinutes, 'minute');
+    return closestTime.format("hh:mm A");
+};
+
+interface TimePickerProps {
+    onTimeSelect?: (time: string) => void;
+}
+
+const TimePicker = ({ onTimeSelect }: TimePickerProps) => {
+    const [selectedTime, setSelectedTime] = useState(getClosestTime());
+
+    // Call onTimeSelect with initial time when component mounts
+    useEffect(() => {
+        if (onTimeSelect) {
+            onTimeSelect(selectedTime);
+        }
+    }, []);
+
+    const handleTimeSelect = (time: string) => {
+        setSelectedTime(time);
+        if (onTimeSelect) {
+            onTimeSelect(time);
+        }
+    };
 
     return (
-        <div className="relative w-full">
-            <Listbox value={selectedTime} onChange={setSelectedTime}>
-                <Listbox.Button className="w-full flex items-center justify-between px-4 py-2 bg-secondary border-white border text-white rounded-md shadow">
+        <div className="relative w-full bg">
+            <input
+                type="hidden"
+                name="time"
+                value={selectedTime}
+            />
+            <Listbox value={selectedTime} onChange={handleTimeSelect}>
+                <Listbox.Button className="w-full flex items-center justify-between px-4 py-2 bg-white border-white border text-black rounded-md shadow">
                     <span>{selectedTime}</span>
                     <ChevronDownIcon className="h-4 w-4" />
                 </Listbox.Button>

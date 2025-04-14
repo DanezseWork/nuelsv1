@@ -47,12 +47,11 @@ export default function Authenticated({
                                     Clients
                                 </NavLink>
                                 <NavLink
-                                    href="/booking"
-                                    active={route().current('booking')}
+                                    href={route('bookings.index')}
+                                    active={route().current('bookings.index')}
                                 >
-                                    Appointments
+                                    Bookings
                                 </NavLink>
-                     
                             </div>
                         </div>
 
@@ -156,6 +155,24 @@ export default function Authenticated({
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/scheduler"
+                            active={route().current('scheduler')}
+                        >
+                            Scheduler
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/booking"
+                            active={route().current('booking')}
+                        >
+                            Clients
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('bookings.index')}
+                            active={route().current('bookings.index')}
+                        >
+                            Bookings
                         </ResponsiveNavLink>
                     </div>
 
