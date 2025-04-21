@@ -26,11 +26,11 @@ export default function Welcome({
     return (
         <>         
             <Header1 />
-            <div className="bg-black px-20">
+            <div className="bg-black">
                 <Hero4 />
                 <Case2 />
                 <Feature6 />
-                <Contact1 />
+                {/* <Contact1 /> */}
                 <Sparkles />
             </div>
             <Footer1 />

@@ -20,7 +20,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $bookings = \App\Models\Booking::orderBy('created_at', 'desc')->get();
+    return Inertia::render('Dashboard', [
+        'bookings' => $bookings
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/scheduler', function () {
@@ -52,6 +55,10 @@ Route::post('booking', [BookingController::class, 'store'])->name('booking.store
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     // ... other authenticated routes ...
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/bookings/update-status', [BookingController::class, 'updateStatus'])->name('bookings.update-status');
 });
 
 require __DIR__.'/auth.php';

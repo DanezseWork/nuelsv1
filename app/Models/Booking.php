@@ -20,10 +20,21 @@ class Booking extends Model
         'location',
         'address',
         'status',
+        'title',
     ];
 
     protected $casts = [
         'date' => 'date',
         'time' => 'datetime',
     ];
+
+    public function getTitleAttribute()
+    {
+        return $this->service;
+    }
+
+    public function getClientAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

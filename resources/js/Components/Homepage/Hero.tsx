@@ -14,9 +14,7 @@ import Sparkles from "../Common/Sparkles";
 // });
 
 export const Hero4 = () => (
-  <div className="relative h-screen w-full py-40 px-10 bg-transparent overflow-hidden">
- 
-
+  <div className="relative min-h-screen w-full bg-transparent py-40">
     <div className="container h-full flex justify-center items-center mx-auto">
       <div className="grid grid-cols-1 gap-8 items-center md:grid-cols-2">
         <motion.div

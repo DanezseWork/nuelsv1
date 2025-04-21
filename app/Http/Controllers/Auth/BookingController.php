@@ -53,4 +53,18 @@ class BookingController extends Controller
             'bookings' => $bookings
         ]);
     }
+
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'booking_id' => 'required|exists:bookings,id',
+            'status' => 'required|in:pending,confirmed,ongoing,done'
+        ]);
+
+        $booking = Booking::findOrFail($request->booking_id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        return back()->with('success', 'Status updated successfully');
+    }
 }
