@@ -41,7 +41,7 @@ export const Feature6 = () => (
           ].map((item, index) => (
             <motion.div 
               key={index} 
-              className={`bg-secondary rounded-md h-full aspect-square lg:aspect-auto flex-col ${item.span || ''}`}
+              className={`bg-secondary rounded-md h-full lg:aspect-auto flex-col ${item.span || ''}`}
               variants={fadeInUp}
             >
               <img src={item.img} alt={item.title} className="w-full h-[400px] sm:h-[150px] md:h-[300px] object-cover rounded-t-md" />
